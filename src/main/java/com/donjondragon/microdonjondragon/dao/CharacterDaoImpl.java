@@ -5,8 +5,18 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+//classe qui implémente l'interface CharacterDao
+
+/* appliquée à la classe afin d'indiquer à Spring qu'il s'agit d'une classe qui gère les données, ce qui va permettre
+de profiter de certaines fonctionnalités
+
+définition d'un tableau de personnages  dans lequel on ajoute 10 personnages statiques. Les méthodes sont
+ redéfinies pour renvoyer les données adéquates :
+
+*/
 @Repository
 public class CharacterDaoImpl implements CharacterDao {
+    // création des Personnages en dur
     public static List<Character>characters=new ArrayList<>();
     static {
         characters.add(new Character(1, new String("Hulk"), "Guerrier"));

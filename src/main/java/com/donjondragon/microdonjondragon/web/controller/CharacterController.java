@@ -1,12 +1,11 @@
 package com.donjondragon.microdonjondragon.web.controller;
-import com.donjondragon.microdonjondragon.dao.CharacterDao;
 import com.donjondragon.microdonjondragon.dao.CharacterDaoImpl;
 import com.donjondragon.microdonjondragon.model.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-
+// modifier du contrôleur afin qu'elle utilise la couche DAO pour manipuler les personnages.
 @RestController
 public class CharacterController {
 
