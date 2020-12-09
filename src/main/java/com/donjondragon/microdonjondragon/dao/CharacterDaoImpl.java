@@ -8,16 +8,16 @@ import java.util.Objects;
 
 //classe qui implémente l'interface CharacterDao
 
-/* appliquée à la classe afin d'indiquer à Spring qu'il s'agit d'une classe qui gère les données, ce qui va permettre
+/*
+@Repository => appliquée à la classe afin d'indiquer à Spring qu'il s'agit d'une classe qui gère les données, ce qui va permettre
 de profiter de certaines fonctionnalités
-
-définition d'un tableau de personnages  dans lequel on ajoute 10 personnages statiques. Les méthodes sont
- redéfinies pour renvoyer les données adéquates :
 
 */
 @Repository
 public class CharacterDaoImpl implements CharacterDao {
-    // création des Personnages en dur
+    /* création des Personnages en dur: définition d'un tableau de personnages  dans lequel on ajoute 10 personnages
+    statiques.
+     */
     public static List<Character> characters = new ArrayList<>();
 
     static {
@@ -32,6 +32,8 @@ public class CharacterDaoImpl implements CharacterDao {
         characters.add(new Character(9, new String("tac"), "Guerrier"));
         characters.add(new Character(10, new String("Tic"), "Magicien"));
     }
+
+    //Les méthodes sont redéfinies pour renvoyer les données adéquates :
 
     @Override
     public List<Character> findAll() {
