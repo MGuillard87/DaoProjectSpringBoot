@@ -2,6 +2,8 @@ package com.donjondragon.microdonjondragon.web.controller;
 import com.donjondragon.microdonjondragon.dao.CharacterDaoImpl;
 import com.donjondragon.microdonjondragon.model.Character;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -76,8 +78,12 @@ public class CharacterController {
 
     //Méthode permettant de récupérer un personnage par son Id
     @GetMapping(value="/Characters/{id}")
-    public Character afficherUnPersonnage(@PathVariable int id) {
-        return characterDao.findById(id);
+    public ResponseEntity<Character> afficherUnPersonnage(@PathVariable int id) {
+        Character characterToDisplay = characterDao.findById(id);
+        if(characterToDisplay == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return new ResponseEntity<>(characterToDisplay, HttpStatus.CREATED);
     }
 
 
@@ -86,21 +92,33 @@ public class CharacterController {
     soit converti en objet Java
     */
     @PostMapping(value = "/Characters")
-    public void ajouterUnPersonnage(@RequestBody Character character) {
-        characterDao.save(character);
+    public ResponseEntity<Void> ajouterUnPersonnage(@RequestBody Character character) {
+        Character characterToAdd = characterDao.save(character);
+        if (characterToAdd == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+
     }
 
     //Méthode permettant de supprimer un personnage
     @DeleteMapping(value = "/Characters/{id}")
-    public void  supprimerUnPersonnage(@PathVariable int id) {
-        characterDao.delete(id);
+    public ResponseEntity<Void> supprimerUnPersonnage(@PathVariable int id) {
+        if(characterDao.delete(id)){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     //Méthode permettant de modifier un personnage
     @PutMapping(value = "/Characters")
-    public void  ModifierUnPersonnage(@RequestBody Character character) {
-        characterDao.update(character);
-
+    public ResponseEntity<Void>  ModifierUnPersonnage(@RequestBody Character character) {
+        Character characterToUpdate = characterDao.update(character);
+        if(characterToUpdate == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
 }
