@@ -4,6 +4,7 @@ import com.donjondragon.microdonjondragon.model.Character;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 //classe qui implémente l'interface CharacterDao
 
@@ -17,7 +18,8 @@ définition d'un tableau de personnages  dans lequel on ajoute 10 personnages st
 @Repository
 public class CharacterDaoImpl implements CharacterDao {
     // création des Personnages en dur
-    public static List<Character>characters=new ArrayList<>();
+    public static List<Character> characters = new ArrayList<>();
+
     static {
         characters.add(new Character(1, new String("Hulk"), "Guerrier"));
         characters.add(new Character(2, new String("Merlin"), "Magicien"));
@@ -32,14 +34,14 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     @Override
-    public List<Character>findAll() {
+    public List<Character> findAll() {
         return characters;
     }
 
     @Override
     public Character findById(int id) {
         for (Character character : characters) {
-            if(character.getId() ==id){
+            if (character.getId() == id) {
                 return character;
             }
         }
@@ -48,7 +50,33 @@ public class CharacterDaoImpl implements CharacterDao {
 
     @Override
     public Character save(Character character) {
-        characters.add(character);
+        int id = character.getId();
+        Character characterFindById = this.findById(id);
+        if (characterFindById == null) {
+            characters.add(character);
+        }
         return character;
     }
+
+    @Override
+    public void delete(int id) {
+        characters.removeIf(character -> character.getId() == id);
+    }
+
+/* méthode update (put) qui prend en paramétre le nouveau character à mettre dans le tableau à la place du character
+à mettre à jour (un remplacement):
+  */
+    @Override
+    public void update(Character character) {
+        // récupération de l'id du nouveau character
+        int id = character.getId();
+        // chercher le character à mettre à jour en fonction de l'id du nouveau character
+        Character characterToUpdate = this.findById(id);
+        //si le character à mettre à jour recherché à partir de l'id existe: on fait les mises à jour
+        if (characterToUpdate != null) {
+            characterToUpdate.setNom(character.getNom());
+            characterToUpdate.setType(character.getType());
+        }
+    }
+
 }
