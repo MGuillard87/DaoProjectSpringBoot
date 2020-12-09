@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 /* Cette classe, générée automatiquement par Spring Boot, est le point de démarrage de l'application, elle lance:
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @SpringBootApplication
+// Pour générer la documentation
+@EnableSwagger2
 @RestController
 public class DonjonDragonApplication {
 

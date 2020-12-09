@@ -61,15 +61,16 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     @Override
-    public void delete(int id) {
-        characters.removeIf(character -> character.getId() == id);
+    public Boolean delete(int id) {
+        return characters.removeIf(character -> character.getId() == id);
+
     }
 
 /* méthode update (put) qui prend en paramétre le nouveau character à mettre dans le tableau à la place du character
 à mettre à jour (un remplacement):
   */
     @Override
-    public void update(Character character) {
+    public Character update(Character character) {
         // récupération de l'id du nouveau character
         int id = character.getId();
         // chercher le character à mettre à jour en fonction de l'id du nouveau character
@@ -78,7 +79,9 @@ public class CharacterDaoImpl implements CharacterDao {
         if (characterToUpdate != null) {
             characterToUpdate.setNom(character.getNom());
             characterToUpdate.setType(character.getType());
+            return characterToUpdate;
         }
+        return null;
     }
 
 }

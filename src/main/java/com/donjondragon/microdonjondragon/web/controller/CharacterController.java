@@ -100,6 +100,7 @@ public class CharacterController {
     @PutMapping(value = "/Characters")
     public void  ModifierUnPersonnage(@RequestBody Character character) {
         characterDao.update(character);
+
     }
 
 }

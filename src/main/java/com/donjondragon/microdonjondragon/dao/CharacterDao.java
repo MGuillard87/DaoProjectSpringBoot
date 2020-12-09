@@ -11,10 +11,10 @@ public interface CharacterDao {
     //save : ajoute un personnage.
     public Character save(Character character);
     //delete: supprimer un personnage
-    public void delete(int id);
+    public Boolean delete(int id);
 
     //put: modifier un personnage
-    public void update(Character character);
+    public Character update(Character character);
 
 }
 
